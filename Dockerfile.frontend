@@ -1,0 +1,10 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir gradio==4.44.1 httpx==0.27.2 "huggingface_hub<0.26"
+
+COPY frontend/ ./frontend/
+
+EXPOSE 7860
+CMD ["python", "frontend/gradio_app.py"]

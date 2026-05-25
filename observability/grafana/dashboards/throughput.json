@@ -1,0 +1,70 @@
+{
+  "uid": "rag-throughput-003",
+  "title": "RAG Chatbot — Throughput",
+  "tags": ["rag", "throughput"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "refresh": "10s",
+  "time": {"from": "now-15m", "to": "now"},
+  "panels": [
+    {
+      "id": 1,
+      "title": "Requests per Minute — All Endpoints",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total[1m])) by (handler) * 60",
+          "legendFormat": "{{handler}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqpm",
+          "color": {"mode": "palette-classic"}
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "RAG Requests — Success vs Error",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {
+          "expr": "rate(rag_requests_total[1m]) * 60",
+          "legendFormat": "{{status}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqpm",
+          "color": {"mode": "palette-classic"}
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Total Successful RAG Requests",
+      "type": "stat",
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 8},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {
+          "expr": "rag_requests_total{status=\"success\"}",
+          "legendFormat": "Success",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {"mode": "fixed", "fixedColor": "green"}
+        }
+      }
+    }
+  ]
+}

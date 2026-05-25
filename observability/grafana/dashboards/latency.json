@@ -1,0 +1,111 @@
+{
+  "uid": "rag-latency-001",
+  "title": "RAG Chatbot — Latency",
+  "tags": ["rag", "latency"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "refresh": "10s",
+  "time": {"from": "now-15m", "to": "now"},
+  "panels": [
+    {
+      "id": 1,
+      "title": "p95 / p99 End-to-End Request Latency (all endpoints)",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_highr_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p95",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_highr_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p99",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": {"mode": "palette-classic"}
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "p95 LLM Latency (OpenAI completion)",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(rag_llm_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p95 LLM",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(rag_llm_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p50 LLM",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": {"mode": "palette-classic"}
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "p95 Retrieval Latency (ChromaDB)",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(rag_retrieval_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p95 Retrieval",
+          "refId": "A"
+        },
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(rag_retrieval_latency_seconds_bucket[5m])) by (le))",
+          "legendFormat": "p50 Retrieval",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": {"mode": "palette-classic"}
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Avg LLM vs Retrieval Latency",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+      "datasource": {"type": "prometheus", "uid": "prometheus"},
+      "targets": [
+        {
+          "expr": "rate(rag_llm_latency_seconds_sum[5m]) / rate(rag_llm_latency_seconds_count[5m])",
+          "legendFormat": "Avg LLM",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(rag_retrieval_latency_seconds_sum[5m]) / rate(rag_retrieval_latency_seconds_count[5m])",
+          "legendFormat": "Avg Retrieval",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": {"mode": "palette-classic"}
+        }
+      }
+    }
+  ]
+}
