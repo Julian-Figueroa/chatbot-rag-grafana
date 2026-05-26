@@ -58,12 +58,12 @@ curl -X POST localhost:8000/chat \
   -d '{"question": "What is Grafana Loki?"}'
 ```
 
-| Service     | URL                      |
-|-------------|--------------------------|
-| Chatbot UI  | http://localhost:7860    |
-| API         | http://localhost:8000    |
-| Prometheus  | http://localhost:9090    |
-| Grafana     | http://localhost:3000    |
+| Service    | URL                   |
+| ---------- | --------------------- |
+| Chatbot UI | http://localhost:7860 |
+| API        | http://localhost:8000 |
+| Prometheus | http://localhost:9090 |
+| Grafana    | http://localhost:3000 |
 
 Grafana login: `admin` / `admin`
 
@@ -71,12 +71,12 @@ Grafana login: `admin` / `admin`
 
 Four auto-provisioned dashboards in the **RAG Chatbot** folder:
 
-| Dashboard | Key Metric |
-|-----------|-----------|
-| Latency | p95/p99 per endpoint, LLM latency, retrieval latency |
-| Error Rate | HTTP 4xx/5xx rate, RAG pipeline errors |
-| Throughput | Requests per minute, cumulative success count |
-| Token Usage | Avg tokens/request, p95 tokens, token rate |
+| Dashboard   | Key Metric                                           |
+| ----------- | ---------------------------------------------------- |
+| Latency     | p95/p99 per endpoint, LLM latency, retrieval latency |
+| Error Rate  | HTTP 4xx/5xx rate, RAG pipeline errors               |
+| Throughput  | Requests per minute, cumulative success count        |
+| Token Usage | Avg tokens/request, p95 tokens, token rate           |
 
 <video src="data/readme/Grafana%20dashboard.mov" controls width="100%"></video>
 
