@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.api import chat, health
+from app.api import feedback
 from app.rag.pipeline import RAGPipeline
 
 logging.basicConfig(level=logging.INFO)
@@ -42,3 +43,4 @@ Instrumentator().instrument(app).expose(app)
 
 app.include_router(chat.router)
 app.include_router(health.router)
+app.include_router(feedback.router)
