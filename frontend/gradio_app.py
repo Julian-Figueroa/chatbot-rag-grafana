@@ -93,7 +93,7 @@ with gr.Blocks(title="Grafana RAG Chatbot") as demo:
     )
 
     gr.Markdown("### Was the last response helpful?")
-    feedback_status = gr.Textbox(label="", interactive=False, visible=False)
+    feedback_status = gr.Markdown("")
     with gr.Row():
         up_btn = gr.Button("👍 Helpful", variant="primary")
         down_btn = gr.Button("👎 Not helpful", variant="secondary")
