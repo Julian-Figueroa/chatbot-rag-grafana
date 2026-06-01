@@ -23,3 +23,9 @@ rag_requests_total = Counter(
     "Total number of RAG /chat requests",
     ["status"],
 )
+
+feedback_counter = Counter(
+    'rag_feedback_total',
+    'Total feedback received',
+    ['rating']  # up, down
+)

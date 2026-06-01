@@ -23,7 +23,8 @@ def mock_pipeline():
 
 
 @pytest.fixture
-def client(mock_pipeline):
+def client(mock_pipeline, monkeypatch):
+    monkeypatch.setenv("API_KEY", "test-key")
     with patch("app.main.RAGPipeline", return_value=mock_pipeline):
         from app.main import app
         with TestClient(app) as c:
@@ -39,18 +40,36 @@ def test_health(client, mock_pipeline):
 
 
 def test_chat(client, mock_pipeline):
-    response = client.post("/chat", json={"question": "What is Grafana Loki?"})
+    response = client.post(
+        "/chat",
+        json={"question": "What is Grafana Loki?"},
+        headers={"X-API-Key": "test-key"},
+    )
     assert response.status_code == 200
     data = response.json()
     assert "answer" in data
     assert "sources" in data
     assert "tokens_used" in data
     assert len(data["answer"]) > 0
-    mock_pipeline.query.assert_called_once_with("What is Grafana Loki?")
+    mock_pipeline.query.assert_called_once_with("What is Grafana Loki?", session_id="default")
+
+
+def test_chat_requires_api_key(client):
+    response = client.post("/chat", json={"question": "What is Grafana Loki?"})
+    assert response.status_code == 403
+
+
+def test_chat_wrong_api_key(client):
+    response = client.post(
+        "/chat",
+        json={"question": "What is Grafana Loki?"},
+        headers={"X-API-Key": "wrong-key"},
+    )
+    assert response.status_code == 403
 
 
 def test_chat_missing_question(client):
-    response = client.post("/chat", json={})
+    response = client.post("/chat", json={}, headers={"X-API-Key": "test-key"})
     assert response.status_code == 422
 
 

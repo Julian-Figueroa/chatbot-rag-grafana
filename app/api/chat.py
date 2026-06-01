@@ -1,11 +1,12 @@
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 
+from app.auth import verify_api_key
 from app.metrics.custom import (
-    rag_tokens_per_request,
-    rag_retrieval_latency_seconds,
     rag_llm_latency_seconds,
     rag_requests_total,
+    rag_retrieval_latency_seconds,
+    rag_tokens_per_request,
 )
 
 router = APIRouter()
@@ -22,11 +23,11 @@ class ChatResponse(BaseModel):
     tokens_used: int
 
 
-@router.post("/chat", response_model=ChatResponse)
+@router.post("/chat", response_model=ChatResponse, dependencies=[Depends(verify_api_key)])
 async def chat(body: ChatRequest, request: Request) -> ChatResponse:
     pipeline = request.app.state.pipeline
     try:
-        result = pipeline.query(body.question)
+        result = pipeline.query(body.question, session_id=body.session_id)
     except Exception as exc:
         rag_requests_total.labels(status="error").inc()
         raise HTTPException(status_code=500, detail=str(exc)) from exc

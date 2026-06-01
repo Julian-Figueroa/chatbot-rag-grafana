@@ -20,6 +20,7 @@ services:
       - EMBEDDING_MODEL=${EMBEDDING_MODEL:-text-embedding-3-small}
       - CHROMA_PERSIST_DIR=/app/chroma_db
       - CHROMA_COLLECTION_NAME=${CHROMA_COLLECTION_NAME:-grafana_docs}
+      - API_KEY=${API_KEY:-dev-key-123}
     volumes:
       - ./chroma_db:/app/chroma_db
       - ./data:/app/data
@@ -46,6 +47,7 @@ services:
       - "7860:7860"
     environment:
       - BACKEND_URL=http://app:8000
+      - API_KEY=${API_KEY:-dev-key-123}
     networks:
       - rag-network
     depends_on:
