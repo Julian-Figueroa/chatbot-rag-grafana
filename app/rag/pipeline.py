@@ -56,7 +56,7 @@ class RAGPipeline:
         # Time retrieval + reranking phase
         t0 = time.perf_counter()
         docs = self.retriever.invoke(question)
-        docs = rerank_documents(question, docs, top_k=3)
+        docs = rerank_documents(question, docs, top_k=5)
         retrieval_latency = time.perf_counter() - t0
 
         context = _format_docs(docs)
@@ -84,10 +84,12 @@ class RAGPipeline:
                 tokens_used = 0
 
         sources = list({doc.metadata.get("source", "") for doc in docs if doc.metadata.get("source")})
+        retrieved_contexts = [doc.page_content for doc in docs]
 
         return {
             "answer": response.content,
             "sources": sources,
+            "retrieved_contexts": retrieved_contexts,
             "tokens_used": tokens_used,
             "retrieval_latency": retrieval_latency,
             "llm_latency": llm_latency,
