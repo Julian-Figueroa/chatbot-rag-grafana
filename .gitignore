@@ -13,3 +13,4 @@ build/
 .DS_Store
 grafana-storage/
 node_modules
+data/eval_results_*.csv

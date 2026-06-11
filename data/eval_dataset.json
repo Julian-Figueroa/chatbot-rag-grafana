@@ -1,0 +1,142 @@
+[
+  {
+    "question": "What is the default port for Prometheus?",
+    "ground_truth": "The default port for Prometheus is 9090."
+  },
+  {
+    "question": "What query language does Prometheus use?",
+    "ground_truth": "Prometheus uses PromQL (Prometheus Query Language) to query time series data."
+  },
+  {
+    "question": "What are exemplars in Prometheus?",
+    "ground_truth": "Exemplars are references to data stored outside of the core Prometheus metric store, typically used to attach trace IDs to metrics so you can jump from a metric to a specific trace."
+  },
+  {
+    "question": "How does Prometheus collect metrics from services?",
+    "ground_truth": "Prometheus collects metrics by scraping HTTP endpoints exposed by target services at regular intervals."
+  },
+  {
+    "question": "What is a Prometheus recording rule?",
+    "ground_truth": "A recording rule pre-computes frequently needed or computationally expensive PromQL expressions and saves the result as a new set of time series, improving query performance."
+  },
+  {
+    "question": "What is Grafana Loki?",
+    "ground_truth": "Grafana Loki is a horizontally scalable, highly available, multi-tenant log aggregation system inspired by Prometheus. It indexes only metadata (labels) rather than full log content, making it cost-effective."
+  },
+  {
+    "question": "What is the default port for Loki?",
+    "ground_truth": "The default port for Loki is 3100."
+  },
+  {
+    "question": "What query language does Loki use?",
+    "ground_truth": "Loki uses LogQL, a query language inspired by PromQL, to query and filter log streams."
+  },
+  {
+    "question": "How does Loki differ from Elasticsearch for log storage?",
+    "ground_truth": "Unlike Elasticsearch, Loki only indexes the metadata (labels) attached to log streams rather than the full text of the logs. This makes Loki simpler to operate and more cost-effective at scale."
+  },
+  {
+    "question": "How do you add a Loki data source in Grafana?",
+    "ground_truth": "You add a Loki data source in Grafana by navigating to Configuration > Data sources, clicking Add data source, selecting Loki, and entering the Loki server URL (typically http://localhost:3100)."
+  },
+  {
+    "question": "What are alert rules in Grafana?",
+    "ground_truth": "Alert rules define the conditions that must be met for an alert to fire. They consist of a query, an expression to evaluate the query result, and a threshold that determines when the alert triggers."
+  },
+  {
+    "question": "What is a contact point in Grafana Alerting?",
+    "ground_truth": "A contact point is a channel or integration used to send alert notifications, such as email, Slack, PagerDuty, or a webhook."
+  },
+  {
+    "question": "What is a notification policy in Grafana Alerting?",
+    "ground_truth": "A notification policy is a set of routing rules that determines which contact points receive which alerts based on label matchers."
+  },
+  {
+    "question": "What is the difference between Grafana-managed and data source-managed alert rules?",
+    "ground_truth": "Grafana-managed alert rules are stored and evaluated by Grafana itself and can query multiple data sources. Data source-managed alert rules (such as Prometheus ruler rules or Loki ruler rules) are stored and evaluated by the data source backend."
+  },
+  {
+    "question": "What is a silence in Grafana Alerting?",
+    "ground_truth": "A silence temporarily stops alert notifications for a specific time period without modifying the alert rule. Silences match alerts by label and stop notifications while the silence is active."
+  },
+  {
+    "question": "What is provisioning in Grafana?",
+    "ground_truth": "Provisioning allows you to configure Grafana resources such as data sources, dashboards, and alert rules using configuration files, enabling version control, automation, and reproducible deployments."
+  },
+  {
+    "question": "How do you provision data sources in Grafana using configuration files?",
+    "ground_truth": "You provision data sources by placing YAML configuration files in the provisioning/datasources directory. Grafana reads these files on startup and creates or updates the defined data sources."
+  },
+  {
+    "question": "What file format does Grafana use for provisioning configuration?",
+    "ground_truth": "Grafana uses YAML files for provisioning configuration of data sources, dashboards, and alert rules."
+  },
+  {
+    "question": "What are Grafana organizations?",
+    "ground_truth": "Organizations are isolated units within a single Grafana instance, each with their own users, teams, dashboards, data sources, and settings. They allow multi-tenancy within one Grafana deployment."
+  },
+  {
+    "question": "What is a service account in Grafana?",
+    "ground_truth": "A service account is a non-human identity used for machine-to-machine authentication, allowing automated processes or applications to authenticate and interact with the Grafana API without using a personal user account."
+  },
+  {
+    "question": "What is the default HTTP port for Grafana?",
+    "ground_truth": "The default HTTP port for Grafana is 3000."
+  },
+  {
+    "question": "What are the default admin credentials for a fresh Grafana installation?",
+    "ground_truth": "The default admin username is 'admin' and the default password is 'admin'. Grafana prompts you to change the password on first login."
+  },
+  {
+    "question": "How do you configure Grafana settings when running in Docker?",
+    "ground_truth": "You configure Grafana in Docker by passing environment variables prefixed with GF_ to the container. For example, GF_SECURITY_ADMIN_PASSWORD sets the admin password."
+  },
+  {
+    "question": "What is the main Grafana configuration file?",
+    "ground_truth": "The main Grafana configuration file is grafana.ini, located at /etc/grafana/grafana.ini by default. It uses INI format with sections like [server], [security], and [smtp]."
+  },
+  {
+    "question": "How do you enable SMTP email sending in Grafana?",
+    "ground_truth": "You enable SMTP in Grafana by configuring the [smtp] section in grafana.ini, setting enabled = true along with the host, user, password, and from_address fields. Alternatively, use GF_SMTP_* environment variables."
+  },
+  {
+    "question": "What is a panel in Grafana?",
+    "ground_truth": "A panel is the basic visualization building block in Grafana. Each panel displays data from one or more queries using a chosen visualization type such as time series, bar chart, stat, table, or heatmap."
+  },
+  {
+    "question": "What is the Explore feature in Grafana?",
+    "ground_truth": "Explore is a query-focused interface in Grafana for ad-hoc data investigation. It lets you build and iterate on queries without creating a dashboard, and supports split view to compare data from two queries side by side."
+  },
+  {
+    "question": "What are dashboard variables in Grafana?",
+    "ground_truth": "Dashboard variables (also called template variables) let you create dynamic, reusable dashboards. Users can select variable values from dropdowns to filter the data displayed across all panels in the dashboard."
+  },
+  {
+    "question": "What visualization types are available in Grafana?",
+    "ground_truth": "Grafana supports many visualization types including time series, bar chart, histogram, pie chart, stat, gauge, table, heatmap, logs, traces, geomap, canvas, and more via plugins."
+  },
+  {
+    "question": "What is the Grafana data frame?",
+    "ground_truth": "A data frame is the universal data structure used internally by Grafana to represent query results. It is a columnar data structure similar to a spreadsheet or Pandas DataFrame that unifies data from different data sources."
+  },
+  {
+    "question": "What is the purpose of the Grafana data source proxy?",
+    "ground_truth": "The data source proxy allows the Grafana backend server to proxy requests to data sources on behalf of the browser, so browser clients do not need direct network access to the data source and credentials are kept server-side."
+  },
+  {
+    "question": "How do you configure CORS in Grafana?",
+    "ground_truth": "You configure CORS in Grafana by setting options in the [security] section of grafana.ini, such as allow_embedding and cookie_samesite. For more advanced CORS control you configure it at the reverse proxy layer (e.g., NGINX)."
+  },
+  {
+    "question": "What is role-based access control (RBAC) in Grafana?",
+    "ground_truth": "RBAC in Grafana provides fine-grained control over user permissions. It extends the basic Viewer/Editor/Admin roles with custom roles that define exactly which actions and resources a user can access."
+  },
+  {
+    "question": "What is observability in the context of software systems?",
+    "ground_truth": "Observability is the ability to understand the internal state of a system by examining its external outputs — primarily metrics, logs, and traces (the three pillars of observability)."
+  },
+  {
+    "question": "What is the difference between metrics and logs in observability?",
+    "ground_truth": "Metrics are numerical measurements aggregated over time that track system performance (e.g., request rate, CPU usage). Logs are timestamped text records of discrete events that occurred in the system. Metrics are efficient for alerting and trending; logs provide detailed context for debugging."
+  }
+]
